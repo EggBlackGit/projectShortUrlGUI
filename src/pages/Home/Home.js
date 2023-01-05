@@ -21,9 +21,9 @@ function Home() {
     }
 
     const getTextUrl = (shortUrl) => {
+        console.log(shortUrl);
         const textUrl = new URL(shortUrl).hostname + '/' + dataUrl.shortId;
         console.log(textUrl);
-        console.log(shortUrl);
         console.log(dataUrl.shortId);
         return textUrl;
     }
