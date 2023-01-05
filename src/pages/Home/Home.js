@@ -10,8 +10,8 @@ function Home() {
     const [textShortUrl, setTextShortUrl] = useState([]);
     const doShortUrl = () => {
         console.log(urlFull);
-        // Axios.post("https://projectshorturlws.onrender.com/shortUrl",{
-        Axios.post("http://localhost:3001/shortUrl", {
+        Axios.post("https://projectshorturlws.onrender.com/shortUrl",{
+//         Axios.post("http://localhost:3001/shortUrl", {
             urlFull: urlFull
         }).then((response) => {
             console.log(response);
