@@ -7,7 +7,6 @@ import Axios from "axios";
 function Home() {
     const [urlFull, setUrlFull] = useState([]);
     const [dataUrl, setDataUrl] = useState([]);
-    // const [textShortUrl, setTextShortUrl] = useState([]);
 
     const doShortUrl = () => {
         console.log(urlFull);
@@ -17,22 +16,8 @@ function Home() {
         }).then((response) => {
             console.log(response);
             setDataUrl(response.data);
-            // setTextShortUrl(getTextUrl(response.data.shortUrl));
-            // setTextShortUrl(getTextUrl(response.data.shortUrl));
-            // setTextShortUrl(getTextUrl(response.data.shortUrl));
-            // console.log(textShortUrl);
-            // getTextUrl(response.data.shortUrl);
         })
     }
-
-    // const getTextUrl = (shortUrl) => {
-    //     console.log(shortUrl);
-    //     const textUrl = new URL(shortUrl).hostname + '/' + dataUrl.shortId;
-    //     console.log(textUrl);
-    //     console.log(dataUrl.shortId);
-    //     document.getElementById('showShortUrl').innerHTML = textUrl;
-    //     // return textUrl;
-    // }
 
     return (<div>
         <div className="container">
