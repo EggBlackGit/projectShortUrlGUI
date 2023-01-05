@@ -16,7 +16,7 @@ function Home() {
         }).then((response) => {
             console.log(response);
             setDataUrl(response.data);
-            setTextShortUrl(getTextUrl(dataUrl.shortUrl));
+            setTextShortUrl(getTextUrl(response.data.shortUrl));
         })
     }
 
