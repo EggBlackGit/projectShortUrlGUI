@@ -1,6 +1,7 @@
 .cardUrl {
     width: 80%;
     text-align: center;
+    margin-top: 20px;
 }
 
 .cardResult{
@@ -46,6 +47,7 @@
 }
 
 .copy-link {
+    cursor: pointer;
     display: flex;
     align-items: center;
 }
