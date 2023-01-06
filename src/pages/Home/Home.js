@@ -41,8 +41,8 @@ function Home() {
         let checkUrlFormat = isValidHttpUrl(urlFull);
         let checkShortUrl = isShortUrlHost(urlFull);
         if (checkUrlFormat && checkShortUrl) {
-            // Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
-            Axios.post("http://localhost:3001/shortUrl", {
+            Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
+//             Axios.post("http://localhost:3001/shortUrl", {
                 urlFull: urlFull
             }).then((response) => {
                 // console.log(response);
