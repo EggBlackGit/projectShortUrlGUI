@@ -13,7 +13,6 @@ function Home() {
         Axios.get("https://projectshorturlws.onrender.com/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
         // Axios.get("http://localhost:3001/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
         })
-        // console.log(dataUrl);
     }, []);
 
     const Toast = Swal.mixin({
@@ -29,7 +28,6 @@ function Home() {
     });
 
     const doShortUrl = () => {
-        // console.log(urlFull);
         if (urlFull == null || urlFull == "") {
             Swal.fire({
                 icon: 'warning',
@@ -44,7 +42,6 @@ function Home() {
             // Axios.post("http://localhost:3001/shortUrl", {
                 urlFull: urlFull
             }).then((response) => {
-                // console.log(response);
                 setDataUrl(response.data);
             })
         } else {
@@ -58,12 +55,9 @@ function Home() {
 
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-        console.log(shortId);
         Axios.get("https://projectshorturlws.onrender.com/updateCount/"+shortId).then((response) => {
         // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
-            // console.log(response);
             setDataUrl(response.data);
-            // console.log(response.data.fullUrl);
             window.open(response.data.fullUrl, '_blank');
         })
     }
