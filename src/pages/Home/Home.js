@@ -11,8 +11,9 @@ function Home() {
 
     useEffect(() => {
         Axios.get("https://projectshorturlws.onrender.com/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
-        // Axios.get("http://localhost:3001/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
+            // Axios.get("http://localhost:3001/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
         })
+        // console.log(dataUrl);
     }, []);
 
     const Toast = Swal.mixin({
@@ -28,6 +29,7 @@ function Home() {
     });
 
     const doShortUrl = () => {
+        // console.log(urlFull);
         if (urlFull == null || urlFull == "") {
             Swal.fire({
                 icon: 'warning',
@@ -37,17 +39,19 @@ function Home() {
         }
 
         let checkUrlFormat = isValidHttpUrl(urlFull);
-        if (checkUrlFormat) {
-            Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
-            // Axios.post("http://localhost:3001/shortUrl", {
+        let checkShortUrl = isShortUrlHost(urlFull);
+        if (checkUrlFormat && checkShortUrl) {
+            // Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
+            Axios.post("http://localhost:3001/shortUrl", {
                 urlFull: urlFull
             }).then((response) => {
+                // console.log(response);
                 setDataUrl(response.data);
             })
         } else {
             Swal.fire({
                 icon: 'error',
-                title: 'Invalid format url!'
+                title: 'Invalid format!'
             })
         }
 
@@ -55,9 +59,12 @@ function Home() {
 
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-        Axios.get("https://projectshorturlws.onrender.com/updateCount/"+shortId).then((response) => {
-        // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
+        console.log(shortId);
+        Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
+            // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
+            // console.log(response);
             setDataUrl(response.data);
+            // console.log(response.data.fullUrl);
             window.open(response.data.fullUrl, '_blank');
         })
     }
@@ -88,10 +95,23 @@ function Home() {
         return url.protocol === "http:" || url.protocol === "https:";
     }
 
+    const isShortUrlHost = (textUrl) => {
+        try {
+            var re = new RegExp('(projectshorturlws.onrender.com)');
+            var rs = textUrl.match(re);
+            if (rs) {
+                return false;
+            }
+        } catch (_) {
+            return false;
+        }
+        return true;
+    }
+
     return (<div>
         <Header />
         <div className="container">
-            
+
             <div className="col d-flex justify-content-center">
                 <div className="card cardUrl">
                     <div className="card-body">
@@ -119,8 +139,8 @@ function Home() {
                             </div>
                             <div className="copy-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clipboard" viewBox="0 0 16 16" onClick={() => copyToClipboard(dataUrl.shortUrl)}>
-                                   <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                                   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                                 </svg>
                             </div>
                         </div>
