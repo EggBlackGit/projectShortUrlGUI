@@ -59,7 +59,7 @@ function Home() {
 
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-        console.log(shortId);
+//         console.log(shortId);
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             // console.log(response);
