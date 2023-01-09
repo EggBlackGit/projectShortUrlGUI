@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 function Home() {
     const [urlFull, setUrlFull] = useState("");
     const [dataUrl, setDataUrl] = useState("");
-    const expression = "^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})";
+    const expression = "^(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
 
     useEffect(() => {
         Axios.get("https://projectshorturlws.onrender.com/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
@@ -84,7 +84,6 @@ function Home() {
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             setDataUrl(response.data);
-            //console.log(response);
             // window.open(response.data.fullUrl, '_blank');
             windowOpen(response.data.fullUrl);
         })
@@ -111,6 +110,9 @@ function Home() {
         try {
             // url = new URL(textUrl);
             var regex = new RegExp(expression);
+            console.log(expression);
+            console.log(regex);
+            console.log(url.match(regex));
             if (url.match(regex)) {
                 return true;
             }
