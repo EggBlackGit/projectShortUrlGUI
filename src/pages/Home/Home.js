@@ -84,7 +84,7 @@ function Home() {
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             setDataUrl(response.data);
-            console.log(response);
+            //console.log(response);
             // window.open(response.data.fullUrl, '_blank');
             windowOpen(response.data.fullUrl);
         })
