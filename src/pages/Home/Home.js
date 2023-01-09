@@ -14,7 +14,6 @@ function Home() {
         Axios.get("https://projectshorturlws.onrender.com/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
             // Axios.get("http://localhost:3001/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
         })
-        // console.log(dataUrl);
     }, []);
 
     const Toast = Swal.mixin({
@@ -61,6 +60,10 @@ function Home() {
                 Swal.close();
             }).catch(() => {
                 Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connect Web Service Failed!'
+                })
             })
         } else {
             Swal.fire({
@@ -84,7 +87,6 @@ function Home() {
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             setDataUrl(response.data);
-            // window.open(response.data.fullUrl, '_blank');
             windowOpen(response.data.fullUrl);
         })
     }
@@ -108,11 +110,7 @@ function Home() {
     const isValidHttpUrl = (textUrl) => {
         let url = textUrl;
         try {
-            // url = new URL(textUrl);
             var regex = new RegExp(expression);
-            console.log(expression);
-            console.log(regex);
-            console.log(url.match(regex));
             if (url.match(regex)) {
                 return true;
             }
@@ -120,7 +118,6 @@ function Home() {
         } catch (_) {
             return false;
         }
-        // return url.protocol === "http:" || url.protocol === "https:";
     }
 
     const isShortUrlHost = (textUrl) => {
