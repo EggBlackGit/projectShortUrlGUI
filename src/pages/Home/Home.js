@@ -29,7 +29,6 @@ function Home() {
     });
 
     const doShortUrl = () => {
-        // console.log(urlFull);
         if (urlFull == null || urlFull == "") {
             Swal.fire({
                 icon: 'warning',
@@ -38,15 +37,29 @@ function Home() {
             return false;
         }
 
+    const loading = () => { // load when call ws
+        Swal.fire({
+            title: 'Loading...',
+            html: '<p class="spinner-grow text-primary" role="status"></p>',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showConfirmButton: false, //hide OK button
+        });
+    }
+        
+
         let checkUrlFormat = isValidHttpUrl(urlFull);
         let checkShortUrl = isShortUrlHost(urlFull);
         if (checkUrlFormat && checkShortUrl) {
+            loading();
             Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
-//             Axios.post("http://localhost:3001/shortUrl", {
+            // Axios.post("http://localhost:3001/shortUrl", {
                 urlFull: urlFull
             }).then((response) => {
-                // console.log(response);
                 setDataUrl(response.data);
+                Swal.close();
+            }).catch(()=>{
+                Swal.close();
             })
         } else {
             Swal.fire({
@@ -59,7 +72,7 @@ function Home() {
 
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-//         console.log(shortId);
+        console.log(shortId);
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             // console.log(response);
