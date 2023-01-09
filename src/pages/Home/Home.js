@@ -71,13 +71,22 @@ function Home() {
 
     }
 
+    const windowOpen = (url) => {
+        let ex = '^http[s]?:\/\/';
+        if (!url.match(new RegExp(ex))) {
+            url = 'http://' + url;
+        }
+        return window.open(url, '_blank');
+    }
+
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-        // console.log(shortId);
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
             setDataUrl(response.data);
-            window.open(response.data.fullUrl, '_blank');
+            console.log(response);
+            // window.open(response.data.fullUrl, '_blank');
+            windowOpen(response.data.fullUrl);
         })
     }
 
