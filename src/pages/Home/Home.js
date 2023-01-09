@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 function Home() {
     const [urlFull, setUrlFull] = useState("");
     const [dataUrl, setDataUrl] = useState("");
+    const expression = "^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})";
 
     useEffect(() => {
         Axios.get("https://projectshorturlws.onrender.com/echo").then((response) => { // ปลุก ws ให้พร้อมใช้งาน
@@ -37,28 +38,28 @@ function Home() {
             return false;
         }
 
-    const loading = () => { // load when call ws
-        Swal.fire({
-            title: 'Loading...',
-            html: '<p class="spinner-grow text-primary" role="status"></p>',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            showConfirmButton: false, //hide OK button
-        });
-    }
-        
+        const loading = () => { // load when call ws
+            Swal.fire({
+                title: 'Loading...',
+                html: '<p class="spinner-grow text-primary" role="status"></p>',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false, //hide OK button
+            });
+        }
+
 
         let checkUrlFormat = isValidHttpUrl(urlFull);
         let checkShortUrl = isShortUrlHost(urlFull);
         if (checkUrlFormat && checkShortUrl) {
             loading();
             Axios.post("https://projectshorturlws.onrender.com/shortUrl", {
-            // Axios.post("http://localhost:3001/shortUrl", {
+                // Axios.post("http://localhost:3001/shortUrl", {
                 urlFull: urlFull
             }).then((response) => {
                 setDataUrl(response.data);
                 Swal.close();
-            }).catch(()=>{
+            }).catch(() => {
                 Swal.close();
             })
         } else {
@@ -72,12 +73,10 @@ function Home() {
 
     const checkShortUrl = () => {
         let shortId = dataUrl.shortId;
-//         console.log(shortId);
+        // console.log(shortId);
         Axios.get("https://projectshorturlws.onrender.com/updateCount/" + shortId).then((response) => {
             // Axios.get("http://localhost:3001/updateCount/" + shortId).then((response) => {
-            // console.log(response);
             setDataUrl(response.data);
-            // console.log(response.data.fullUrl);
             window.open(response.data.fullUrl, '_blank');
         })
     }
@@ -99,13 +98,18 @@ function Home() {
     }
 
     const isValidHttpUrl = (textUrl) => {
-        let url;
+        let url = textUrl;
         try {
-            url = new URL(textUrl);
+            // url = new URL(textUrl);
+            var regex = new RegExp(expression);
+            if (url.match(regex)) {
+                return true;
+            }
+            return false;
         } catch (_) {
             return false;
         }
-        return url.protocol === "http:" || url.protocol === "https:";
+        // return url.protocol === "http:" || url.protocol === "https:";
     }
 
     const isShortUrlHost = (textUrl) => {
